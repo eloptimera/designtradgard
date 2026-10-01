@@ -1,0 +1,19 @@
+---
+import { site } from "../site.config";
+interface Props {
+  light?: boolean;
+  class?: string;
+}
+const { light = false, class: className = "" } = Astro.props;
+---
+
+<span
+  class:list={[
+    "font-display text-xl font-semibold tracking-[0.2em] uppercase",
+    light ? "text-white" : "text-ink",
+    className,
+  ]}
+>
+  <span aria-hidden="true">{site.company.shortName}</span>
+  <span class="sr-only">{site.company.name}</span>
+</span>

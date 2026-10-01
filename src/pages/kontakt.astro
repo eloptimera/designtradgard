@@ -1,0 +1,136 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../site.config";
+
+const c = site.company;
+const p = site.contactPage;
+const card = "flex gap-4 rounded-3xl bg-tint p-6";
+const icon = "mt-1 size-5 shrink-0 text-brand";
+---
+
+<Base title={site.seo.contact.title} description={site.seo.contact.description}>
+  <PageHero eyebrow={p.eyebrow} title={p.title} intro={p.intro} />
+
+  <section class="container-page grid gap-14 py-20 sm:py-28 lg:grid-cols-2 lg:gap-20">
+    <div class="reveal">
+      <ul class="space-y-4">
+        {c.phone && (
+          <li class={card}>
+            <Icon name="phone" class={icon} />
+            <div>
+              <p class="eyebrow">Telefon</p>
+              <a
+                href={`tel:${c.phoneLink}`}
+                class="mt-1 block font-display text-2xl text-ink hover:text-brand"
+              >
+                {c.phone}
+              </a>
+            </div>
+          </li>
+        )}
+        {c.email && (
+          <li class={card}>
+            <Icon name="mail" class={icon} />
+            <div>
+              <p class="eyebrow">E-post</p>
+              <a href={`mailto:${c.email}`} class="mt-1 block font-bold text-ink hover:text-brand">
+                {c.email}
+              </a>
+            </div>
+          </li>
+        )}
+        <li class={card}>
+          <Icon name="pin" class={icon} />
+          <div>
+            <p class="eyebrow">Adress</p>
+            <address class="mt-1 font-bold text-ink not-italic">
+              {c.name}
+              <br />
+              {c.street}
+              <br />
+              {c.zip} {c.city}
+            </address>
+            <a
+              href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(`${c.street}, ${c.zip} ${c.city}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-2 inline-block text-sm font-bold text-brand underline"
+            >
+              Visa på karta
+            </a>
+          </div>
+        </li>
+        {c.hours.length > 0 && (
+          <li class={card}>
+            <Icon name="clock" class={icon} />
+            <div>
+              <p class="eyebrow">Öppettider kundtjänst</p>
+              <dl class="mt-2 space-y-1 text-sm">
+                {c.hours.map((o) => (
+                  <div class="flex justify-between gap-6">
+                    <dt class="font-bold text-ink">{o.days}</dt>
+                    <dd class="text-muted-foreground">{o.time}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </li>
+        )}
+      </ul>
+    </div>
+
+    <div class="reveal" style="--d:120ms">
+      <form data-form="kontakt" class="grid gap-5 rounded-[2rem] border-2 border-line bg-white p-8 sm:p-10">
+        <h2 class="text-3xl">{p.formTitle}</h2>
+        <div>
+          <label for="k-namn" class="text-sm font-bold">
+            Namn
+          </label>
+          <input id="k-namn" name="namn" autocomplete="name" required class="field mt-2" />
+        </div>
+        <div>
+          <label for="k-epost" class="text-sm font-bold">
+            E-post
+          </label>
+          <input id="k-epost" name="epost" type="email" autocomplete="email" required class="field mt-2" />
+        </div>
+        <div>
+          <label for="k-telefon" class="text-sm font-bold">
+            Telefon (valfritt)
+          </label>
+          <input id="k-telefon" name="telefon" type="tel" autocomplete="tel" class="field mt-2" />
+        </div>
+        <div>
+          <label for="k-meddelande" class="text-sm font-bold">
+            Meddelande
+          </label>
+          <textarea id="k-meddelande" name="meddelande" rows="5" required class="field mt-2"></textarea>
+        </div>
+        <!-- Honeypot: dolt för människor, bottar fyller i det -->
+        <div class="sr-only" aria-hidden="true">
+          <label for="k-website">Lämna tomt</label>
+          <input id="k-website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <p data-form-status role="alert" hidden class="text-sm font-bold text-destructive"></p>
+        <div>
+          <button type="submit" data-submit class="btn-base btn-dark">
+            Skicka meddelande
+          </button>
+        </div>
+      </form>
+
+      <div
+        data-form-success="kontakt"
+        hidden
+        tabindex="-1"
+        role="status"
+        class="rounded-[2rem] border-2 border-line bg-white p-8 sm:p-10"
+      >
+        <h2 class="text-3xl">{p.thanksTitle}</h2>
+        <p class="mt-4 text-muted-foreground">{p.thanksText}</p>
+      </div>
+    </div>
+  </section>
+</Base>
