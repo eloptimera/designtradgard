@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { KornFilter } from "@/components/Brand";
 
 function NotFoundComponent() {
   return (
@@ -24,7 +25,7 @@ function NotFoundComponent() {
           Sidan du letar efter finns inte eller har flyttats.
         </p>
         <div className="mt-6">
-          <Link to="/" className="btn-base btn-blue">
+          <Link to="/" className="btn-base btn-dark">
             Till startsidan
           </Link>
         </div>
@@ -55,7 +56,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="btn-base btn-blue"
+            className="btn-base btn-dark"
           >
             Försök igen
           </button>
@@ -73,14 +74,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Zanea AB – Städfirma i Bromma & Stockholm" },
+      { title: "Jovos Transport AB – Städfirma i Göteborg" },
       {
         name: "description",
         content:
-          "Professionell lokalvård och hemstädning i Stockholm & Bromma. RUT-avdrag direkt på fakturan, ansvarsförsäkring och nöjd-kund-garanti. Få fri offert.",
+          "Professionell lokalvård för företag, kontor och fastigheter i Göteborg. Kollektivavtal och verksamma sedan 1995. Få fri offert.",
       },
-      { property: "og:site_name", content: "Zanea AB" },
-      { name: "theme-color", content: "#1d5ed8" },
+      { property: "og:site_name", content: "Jovos Transport AB" },
+      { name: "theme-color", content: "#ebeae6" },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "sv_SE" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -101,18 +102,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "HomeAndConstructionBusiness",
           additionalType: "https://schema.org/CleaningService",
-          name: "Zanea AB",
+          name: "Jovos Transport AB",
           description:
-            "Städ- och lokalvårdsbolag i Bromma. Hemstädning, flytt- och storstädning, företagsstädning samt bygg- och feststädning i Stockholm och Bromma.",
-          foundingDate: "2024",
+            "Lokalvårdsbolag i Göteborg. Kontorsstädning, fastighetsstädning och lokalvård för företag, fastighetsägare och organisationer.",
+          foundingDate: "1995",
+          telephone: "+4631482633",
           address: {
             "@type": "PostalAddress",
-            streetAddress: "Stenhammarsvägen 2A",
-            postalCode: "168 58",
-            addressLocality: "Bromma",
+            streetAddress: "Björnväktarens Gata 25",
+            postalCode: "415 51",
+            addressLocality: "Göteborg",
             addressCountry: "SE",
           },
-          areaServed: ["Stockholm", "Bromma"],
+          areaServed: ["Göteborg"],
         }),
       },
     ],
@@ -129,7 +131,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body className="bg-white">
+      <body>
         {children}
         <Scripts />
       </body>
@@ -142,6 +144,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <KornFilter />
       <div className="flex min-h-screen flex-col">
         <Header />
         <main id="innehall" className="flex-1 overflow-x-clip">
