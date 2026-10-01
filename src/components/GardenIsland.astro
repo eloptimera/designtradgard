@@ -22,6 +22,8 @@ const height = custom?.height ?? 740;
   <div class="float-slow">
     <img
       src={src}
+      srcset={custom?.srcset}
+      sizes={custom?.srcset ? "(min-width: 1024px) 50vw, 92vw" : undefined}
       width={width}
       height={height}
       alt=""

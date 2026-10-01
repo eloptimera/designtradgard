@@ -43,7 +43,12 @@ export const site = {
    * 3D-render (PNG/WebP med transparent bakgrund fungerar bäst): lägg filen i /public och fyll i
    * t.ex. { src: "/hero.webp", width: 1600, height: 1200 }.
    */
-  heroImage: null as null | { src: string; width: number; height: number },
+  heroImage: {
+    src: "/hero-island.webp",
+    width: 1248,
+    height: 1150,
+    srcset: "/hero-island-800.webp 800w, /hero-island.webp 1248w",
+  } as null | { src: string; width: number; height: number; srcset?: string },
 
   /** Titel och beskrivning per sida (visas i Google och när sidan delas). */
   seo: {
