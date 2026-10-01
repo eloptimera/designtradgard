@@ -1,263 +1,33 @@
 ---
 /**
- * Illustration: en svävande gräsö med träd, buskar, gångstenar, lampor och gräsklippare.
- * Rent dekorativ (döljs för skärmläsare). Byt mot ett riktigt foto/en 3D-bild vid behov.
- * Storlek och placering styrs med class.
+ * Hero-bilden: en svävande gräsö. Som standard används den genererade illustrationen
+ * (/hero-island.svg, se src/lib/garden-island.ts). Sätt `heroImage` i src/site.config.ts
+ * för att i stället visa ett riktigt foto eller en 3D-render.
+ * Rent dekorativ (alt är tomt). Storlek och placering styrs med class.
  */
+import { site } from "../site.config";
+
 interface Props {
   class?: string;
 }
 const { class: className = "" } = Astro.props;
 
-// Gräsmattans översida: en romb. Ränder är parallellogram parallella med högra kanten.
-const L = [40, 290],
-  T = [330, 150];
-const A = [T[0] - L[0], T[1] - L[1]]; // vänster → topp
-const B = [290, 140]; // topp → höger
-const N = 12;
-const stripes = Array.from({ length: N }, (_, i) => {
-  const t0 = i / N,
-    t1 = (i + 1) / N;
-  const p0 = [L[0] + A[0] * t0, L[1] + A[1] * t0];
-  const p1 = [L[0] + A[0] * t1, L[1] + A[1] * t1];
-  return {
-    pts: `${p0[0]},${p0[1]} ${p0[0] + B[0]},${p0[1] + B[1]} ${p1[0] + B[0]},${p1[1] + B[1]} ${p1[0]},${p1[1]}`,
-    dark: i % 2 === 0,
-  };
-});
-
-const stones = [
-  [320, 394, 24, 9],
-  [290, 374, 22, 8.5],
-  [262, 358, 20, 8],
-  [236, 344, 18, 7.5],
-  [213, 332, 16, 7],
-];
-const crown = [
-  [430, 112, 78],
-  [382, 138, 52],
-  [482, 138, 52],
-  [430, 152, 56],
-  [402, 72, 46],
-  [462, 76, 46],
-];
+const custom = site.heroImage;
+const src = custom?.src ?? "/hero-island.svg";
+const width = custom?.width ?? 900;
+const height = custom?.height ?? 740;
 ---
 
-<svg
-  viewBox="0 0 660 560"
-  aria-hidden="true"
-  focusable="false"
-  class:list={["pointer-events-none overflow-visible", className]}
->
-  <defs>
-    <linearGradient id="gi-lawn" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#a5e07c" stop-opacity="0.55"></stop>
-      <stop offset="0.55" stop-color="#6cc04a" stop-opacity="0"></stop>
-      <stop offset="1" stop-color="#2f7d32" stop-opacity="0.45"></stop>
-    </linearGradient>
-    <linearGradient id="gi-soil-l" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#8a5d36"></stop>
-      <stop offset="1" stop-color="#4a3220"></stop>
-    </linearGradient>
-    <linearGradient id="gi-soil-r" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#694625"></stop>
-      <stop offset="1" stop-color="#2e1f12"></stop>
-    </linearGradient>
-    <radialGradient id="gi-leaf" cx="0.35" cy="0.3" r="0.85">
-      <stop offset="0" stop-color="#a6ea7e"></stop>
-      <stop offset="0.45" stop-color="#52b24a"></stop>
-      <stop offset="1" stop-color="#2a7a34"></stop>
-    </radialGradient>
-    <radialGradient id="gi-leaf-dark" cx="0.4" cy="0.3" r="0.9">
-      <stop offset="0" stop-color="#58b04a"></stop>
-      <stop offset="1" stop-color="#1f6430"></stop>
-    </radialGradient>
-    <radialGradient id="gi-bush" cx="0.35" cy="0.28" r="0.85">
-      <stop offset="0" stop-color="#9be572"></stop>
-      <stop offset="0.5" stop-color="#4aa844"></stop>
-      <stop offset="1" stop-color="#25702f"></stop>
-    </radialGradient>
-    <radialGradient id="gi-glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#ffe9a0" stop-opacity="0.95"></stop>
-      <stop offset="1" stop-color="#ffe9a0" stop-opacity="0"></stop>
-    </radialGradient>
-    <linearGradient id="gi-trunk" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#8b5e3a"></stop>
-      <stop offset="1" stop-color="#5b3b22"></stop>
-    </linearGradient>
-    <linearGradient id="gi-mower" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#3fae4a"></stop>
-      <stop offset="1" stop-color="#1e6b34"></stop>
-    </linearGradient>
-    <filter id="gi-blur" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="14"></feGaussianBlur>
-    </filter>
-    <filter id="gi-blur-s" x="-30%" y="-60%" width="160%" height="220%">
-      <feGaussianBlur stdDeviation="4"></feGaussianBlur>
-    </filter>
-    <clipPath id="gi-top">
-      <polygon points="40,290 330,150 620,290 330,430"></polygon>
-    </clipPath>
-  </defs>
-
-  <!-- Skugga under ön -->
-  <ellipse cx="330" cy="528" rx="230" ry="20" fill="#0d3a1c" opacity="0.35" filter="url(#gi-blur)"></ellipse>
-
-  <g class="float-slow">
-    <!-- Jordlager -->
-    <path d="M40 290 L330 430 L330 506 Q185 456 40 366 Z" fill="url(#gi-soil-l)"></path>
-    <path d="M330 430 L620 290 L620 366 Q475 456 330 506 Z" fill="url(#gi-soil-r)"></path>
-    <!-- små stenar i jorden -->
-    <g opacity="0.35" fill="#2b1c10">
-      <ellipse cx="120" cy="372" rx="10" ry="5"></ellipse>
-      <ellipse cx="205" cy="418" rx="8" ry="4"></ellipse>
-      <ellipse cx="270" cy="450" rx="12" ry="5"></ellipse>
-      <ellipse cx="410" cy="448" rx="10" ry="5"></ellipse>
-      <ellipse cx="505" cy="395" rx="9" ry="4"></ellipse>
-      <ellipse cx="575" cy="345" rx="8" ry="4"></ellipse>
-    </g>
-    <!-- gräskant -->
-    <path d="M40 290 L330 430 L330 448 L40 308 Z" fill="#4f9e3f"></path>
-    <path d="M330 430 L620 290 L620 308 L330 448 Z" fill="#3d8a38"></path>
-
-    <!-- Gräsmatta -->
-    <g clip-path="url(#gi-top)">
-      <rect x="0" y="100" width="660" height="360" fill="#5fb347"></rect>
-      {stripes.map((s) => (
-        <polygon points={s.pts} fill={s.dark ? "#67bd4c" : "#78cb58"}></polygon>
-      ))}
-      <polygon points="40,290 330,150 620,290 330,430" fill="url(#gi-lawn)"></polygon>
-    </g>
-
-    <!-- Träd: skugga, stam, krona -->
-    <ellipse
-      cx="462"
-      cy="244"
-      rx="76"
-      ry="18"
-      fill="#1c5a2a"
-      opacity="0.3"
-      filter="url(#gi-blur-s)"
-    ></ellipse>
-    <path
-      d="M422 242 C426 214 428 190 427 160 L439 160 C438 190 441 214 446 242 Z"
-      fill="url(#gi-trunk)"
-    ></path>
-    <g>
-      {crown.map(([cx, cy, r]) => (
-        <circle cx={cx} cy={cy} r={r} fill="url(#gi-leaf-dark)"></circle>
-      ))}
-      {crown.map(([cx, cy, r]) => (
-        <circle cx={cx - 8} cy={cy - 10} r={r * 0.78} fill="url(#gi-leaf)"></circle>
-      ))}
-    </g>
-
-    <!-- Buskar -->
-    <ellipse
-      cx="170"
-      cy="304"
-      rx="52"
-      ry="12"
-      fill="#1c5a2a"
-      opacity="0.28"
-      filter="url(#gi-blur-s)"
-    ></ellipse>
-    <circle cx="150" cy="268" r="36" fill="url(#gi-bush)"></circle>
-    <circle cx="205" cy="256" r="28" fill="url(#gi-bush)"></circle>
-    <circle cx="116" cy="282" r="22" fill="url(#gi-bush)"></circle>
-    <!-- blommor -->
-    <g>
-      <circle cx="140" cy="296" r="3.2" fill="#fff6e0"></circle>
-      <circle cx="152" cy="302" r="3.2" fill="#ffd966"></circle>
-      <circle cx="178" cy="292" r="3.2" fill="#fff6e0"></circle>
-      <circle cx="196" cy="282" r="3" fill="#ffd966"></circle>
-      <circle cx="128" cy="300" r="2.8" fill="#ffd966"></circle>
-    </g>
-
-    <!-- Gångstenar -->
-    {stones.map(([cx, cy, rx, ry]) => (
-      <g>
-        <ellipse cx={cx} cy={cy + 4} rx={rx} ry={ry} fill="#9a9786"></ellipse>
-        <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill="#e6e3d6"></ellipse>
-        <ellipse cx={cx - 3} cy={cy - 1.5} rx={rx * 0.6} ry={ry * 0.5} fill="#f5f3e8" opacity="0.9"></ellipse>
-      </g>
-    ))}
-
-    <!-- Lampor -->
-    <g>
-      <line
-        x1="496"
-        y1="318"
-        x2="496"
-        y2="282"
-        stroke="#2a3a2d"
-        stroke-width="3"
-        stroke-linecap="round"
-      ></line>
-      <circle cx="496" cy="278" r="16" fill="url(#gi-glow)"></circle>
-      <circle cx="496" cy="278" r="4.5" fill="#fff0b8"></circle>
-      <line x1="96" y1="318" x2="96" y2="288" stroke="#2a3a2d" stroke-width="3" stroke-linecap="round"></line>
-      <circle cx="96" cy="284" r="14" fill="url(#gi-glow)"></circle>
-      <circle cx="96" cy="284" r="4" fill="#fff0b8"></circle>
-    </g>
-
-    <!-- Skylt -->
-    <g>
-      <line x1="530" y1="326" x2="530" y2="296" stroke="#3a2a1a" stroke-width="3"></line>
-      <line x1="566" y1="310" x2="566" y2="280" stroke="#3a2a1a" stroke-width="3"></line>
-      <polygon points="526,300 570,282 570,308 526,326" fill="#14281a"></polygon>
-      <path d="M538 309c0-6 4-10 10-11 0 6-3 10-10 11Z" fill="#7fd36b"></path>
-      <line
-        x1="534"
-        y1="318"
-        x2="560"
-        y2="308"
-        stroke="#7fd36b"
-        stroke-width="1.6"
-        stroke-linecap="round"
-        opacity="0.8"
-      ></line>
-    </g>
-
-    <!-- Gräsklippare -->
-    <ellipse
-      cx="356"
-      cy="352"
-      rx="66"
-      ry="13"
-      fill="#164a24"
-      opacity="0.4"
-      filter="url(#gi-blur-s)"
-    ></ellipse>
-    <g>
-      <!-- handtag -->
-      <path d="M392 306 L452 238" stroke="#1d2a20" stroke-width="4" stroke-linecap="round" fill="none"></path>
-      <path d="M404 316 L462 250" stroke="#1d2a20" stroke-width="4" stroke-linecap="round" fill="none"></path>
-      <path d="M452 238 L462 250" stroke="#1d2a20" stroke-width="6" stroke-linecap="round"></path>
-      <!-- däck -->
-      <polygon points="296,330 372,306 410,322 336,348" fill="#16552a"></polygon>
-      <polygon points="296,322 372,298 410,314 336,340" fill="url(#gi-mower)"></polygon>
-      <polygon points="300,322 372,300 380,303 308,326" fill="#6fd06c" opacity="0.55"></polygon>
-      <!-- motorkåpa -->
-      <path d="M336 312 C334 292 352 280 376 284 C394 288 398 302 392 312 L368 322 Z" fill="#1f7a3a"></path>
-      <path
-        d="M344 306 C346 292 360 286 376 289 C386 292 388 298 384 303 Z"
-        fill="#8ce07f"
-        opacity="0.7"
-      ></path>
-      <rect x="353" y="289" width="16" height="6" rx="3" fill="#14281a" opacity="0.85"></rect>
-      <!-- hjul -->
-      <ellipse cx="312" cy="342" rx="14" ry="12" fill="#222a24"></ellipse>
-      <ellipse cx="312" cy="342" rx="6" ry="5" fill="#8a948c"></ellipse>
-      <ellipse cx="398" cy="332" rx="14" ry="12" fill="#222a24"></ellipse>
-      <ellipse cx="398" cy="332" rx="6" ry="5" fill="#8a948c"></ellipse>
-    </g>
-
-    <!-- svävande löv -->
-    <g fill="#8fdc72" opacity="0.9">
-      <path d="M92 168c0-10 8-17 18-17 0 10-8 17-18 17Z" transform="rotate(-22 100 160)"></path>
-      <path d="M566 190c0-9 7-15 16-15 0 9-7 15-16 15Z" transform="rotate(20 574 182)"></path>
-      <path d="M540 108c0-8 6-13 14-13 0 8-6 13-14 13Z" transform="rotate(-8 547 102)" opacity="0.7"></path>
-    </g>
-  </g>
-</svg>
+<div aria-hidden="true" class:list={["pointer-events-none", className]}>
+  <div class="float-slow">
+    <img
+      src={src}
+      width={width}
+      height={height}
+      alt=""
+      decoding="async"
+      fetchpriority="high"
+      class="block h-auto w-full select-none"
+    />
+  </div>
+</div>

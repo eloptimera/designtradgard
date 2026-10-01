@@ -38,6 +38,13 @@ export const site = {
   ],
   navCta: { href: "/kontakt", label: "Få fri offert" },
 
+  /**
+   * Hero-bild. Lämna som null för den genererade gräsön. Vill du använda ett riktigt foto eller en
+   * 3D-render (PNG/WebP med transparent bakgrund fungerar bäst): lägg filen i /public och fyll i
+   * t.ex. { src: "/hero.webp", width: 1600, height: 1200 }.
+   */
+  heroImage: null as null | { src: string; width: number; height: number },
+
   /** Titel och beskrivning per sida (visas i Google och när sidan delas). */
   seo: {
     home: {

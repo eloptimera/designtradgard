@@ -29,15 +29,12 @@ const { light = false, class: className = "" } = Astro.props;
     </svg>
   </span>
   <span class="flex flex-col leading-none">
-    <span
-      class:list={["font-display text-xl font-semibold", light ? "text-white" : "text-ink"]}
-      aria-hidden="true"
-    >
+    <span class:list={["font-display text-2xl", light ? "text-white" : "text-ink"]} aria-hidden="true">
       {site.company.shortName}
     </span>
     <span
       class:list={[
-        "mt-1 text-[0.62rem] font-bold tracking-[0.22em] uppercase",
+        "mt-1.5 text-[0.62rem] font-bold tracking-[0.22em] uppercase",
         light ? "text-white/75" : "text-leaf",
       ]}
       aria-hidden="true"
