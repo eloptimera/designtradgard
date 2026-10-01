@@ -1,0 +1,73 @@
+---
+import { site } from "../site.config";
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) =>
+  href === "/" ? path === "/" : path === href || path.startsWith(href + "/");
+const link =
+  "caps px-4 py-3 !tracking-[0.16em] whitespace-nowrap text-ink/70 transition-colors duration-200 hover:text-ink";
+const linkActive = "!text-ink underline decoration-ink decoration-1 underline-offset-[10px]";
+---
+
+<header class="sticky top-0 z-50 bg-background/80 backdrop-blur-md">
+  <a
+    href="#innehall"
+    class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-4 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:font-bold focus:text-ink"
+  >
+    Hoppa till innehållet
+  </a>
+  <div class="relative mx-auto flex h-[4.5rem] max-w-[88rem] items-center justify-between px-6 sm:px-10">
+    <a href="/" aria-label={`${site.company.name} – startsida`}>
+      <Logo />
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Huvudmeny">
+      {site.nav.map((l) => (
+        <a
+          href={l.href}
+          class:list={[link, isActive(l.href) && linkActive]}
+          aria-current={isActive(l.href) ? "page" : undefined}
+        >
+          {l.label}
+        </a>
+      ))}
+      <a href={site.navCta.href} class="btn-base btn-dark ml-4 min-h-11 px-6 py-2 text-sm">
+        {site.navCta.label}
+      </a>
+    </nav>
+
+    <button
+      type="button"
+      data-menu-button
+      aria-label="Öppna meny"
+      aria-expanded="false"
+      aria-controls="mobilmeny"
+      class="group grid size-12 place-items-center rounded-full bg-tint text-ink md:hidden"
+    >
+      <Icon name="menu" class="size-5 group-aria-expanded:hidden" />
+      <Icon name="x" class="hidden size-5 group-aria-expanded:block" />
+    </button>
+
+    <nav
+      id="mobilmeny"
+      hidden
+      aria-label="Mobilmeny"
+      class="absolute inset-x-4 top-full mt-2 flex flex-col gap-1 rounded-[1.75rem] bg-white p-3 shadow-xl shadow-ink/15 md:hidden"
+    >
+      {site.nav.map((l) => (
+        <a
+          href={l.href}
+          class:list={[link, "py-3.5 text-base", isActive(l.href) && linkActive]}
+          aria-current={isActive(l.href) ? "page" : undefined}
+        >
+          {l.label}
+        </a>
+      ))}
+      <a href={site.navCta.href} class="btn-base btn-dark mt-1">
+        {site.navCta.label}
+      </a>
+    </nav>
+  </div>
+</header>

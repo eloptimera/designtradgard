@@ -1,0 +1,30 @@
+---
+/**
+ * Kornig, suddig färgblob. Rent dekorativ. Filtret #jovos-korn definieras i layouten.
+ * Storlek och placering styrs med class (t.ex. absolute + bredd).
+ */
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+
+const blobs = [
+  ["6%", "4%", "46%", "42%", "radial-gradient(circle at 40% 40%, #7fe3ff 0%, #3d7bff 70%)", 0],
+  ["26%", "22%", "42%", "56%", "radial-gradient(circle at 50% 40%, #8a4dff 0%, #3a1fe0 80%)", -18],
+  ["50%", "10%", "42%", "40%", "radial-gradient(circle at 50% 50%, #ffb066 0%, #ff6f3c 85%)", 8],
+  ["4%", "52%", "40%", "36%", "radial-gradient(circle at 50% 50%, #ffe27a 0%, #ffb52e 90%)", 0],
+  ["46%", "56%", "40%", "38%", "radial-gradient(circle at 50% 50%, #ff7d96 0%, #ff4f6e 90%)", 0],
+  ["34%", "58%", "26%", "28%", "radial-gradient(circle at 50% 50%, #6a3bff 0%, #3a1fe0 90%)", 0],
+] as const;
+---
+
+<div aria-hidden="true" class:list={["pointer-events-none aspect-[5/4]", className]}>
+  <div class="relative size-full" style="filter: url(#jovos-korn)">
+    {blobs.map(([left, top, w, h, bg, rot]) => (
+      <span
+        class="absolute rounded-full"
+        style={`left:${left};top:${top};width:${w};height:${h};background-image:${bg};transform:rotate(${rot}deg)`}
+      />
+    ))}
+  </div>
+</div>

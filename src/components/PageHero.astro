@@ -1,0 +1,33 @@
+---
+import Blob from "./Blob.astro";
+import { mark } from "../lib/text";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+}
+const { eyebrow, title, intro } = Astro.props;
+---
+
+<section class="relative isolate overflow-hidden">
+  <Blob class="absolute top-1/2 -right-16 -z-10 hidden w-[36rem] -translate-y-1/2 opacity-90 lg:block" />
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute top-1/2 right-[5%] -z-10 hidden aspect-square w-[30rem] -translate-y-1/2 rounded-full border border-ink/70 lg:block"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-x-0 bottom-0 -z-10 border-b border-ink/70"
+  ></span>
+  <div class="mx-auto max-w-[88rem] px-6 py-16 sm:px-10 sm:py-24 lg:py-28">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 class="mt-6 max-w-3xl text-[clamp(2.5rem,6.4vw,5.5rem)] leading-[1.02]" set:html={mark(title)} />
+    {intro && <p class="mt-7 max-w-xl text-lg leading-relaxed text-ink/80">{intro}</p>}
+    {Astro.slots.has("default") && (
+      <div class="mt-9 flex flex-wrap gap-3">
+        <slot />
+      </div>
+    )}
+  </div>
+</section>

@@ -1,0 +1,105 @@
+---
+import "../styles/global.css";
+import { site } from "../site.config";
+import { plain } from "../lib/text";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+const { title, description, noindex = false } = Astro.props;
+
+const c = site.company;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  additionalType: "https://schema.org/CleaningService",
+  name: c.name,
+  description: site.seo.businessDescription,
+  url: Astro.site?.href,
+  foundingDate: String(c.founded),
+  ...(c.phone ? { telephone: c.phoneLink } : {}),
+  ...(c.email ? { email: c.email } : {}),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: c.street,
+    postalCode: c.zip,
+    addressLocality: c.city,
+    addressCountry: "SE",
+  },
+  areaServed: [c.area],
+};
+---
+
+<!doctype html>
+<html lang="sv" data-site={site.id}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{plain(title)}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#ebeae6" />
+    <meta property="og:site_name" content={c.name} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="sv_SE" />
+    <meta property="og:title" content={plain(title)} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <!-- Filter som ger blobben dess korniga kanter -->
+    <svg width="0" height="0" aria-hidden="true" class="pointer-events-none absolute">
+      <defs>
+        <filter
+          id="jovos-korn"
+          x="-30%"
+          y="-30%"
+          width="160%"
+          height="160%"
+          color-interpolation-filters="sRGB"
+        >
+          <feGaussianBlur stdDeviation="22" result="bl"></feGaussianBlur>
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.8"
+            numOctaves="2"
+            seed="7"
+            result="nz"
+          ></feTurbulence>
+          <feDisplacementMap
+            in="bl"
+            in2="nz"
+            scale="64"
+            xChannelSelector="R"
+            yChannelSelector="G"
+          ></feDisplacementMap>
+        </filter>
+      </defs>
+    </svg>
+
+    <div class="flex min-h-screen flex-col">
+      <Header />
+      <main id="innehall" class="flex-1 overflow-x-clip">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+
+    <script>
+      import "../scripts/site";
+    </script>
+  </body>
+</html>
