@@ -2,37 +2,32 @@
  * ALLT kundspecifikt ligger här: företagsuppgifter, texter, tjänster och SEO.
  * Ny kund = kopiera repot, ändra den här filen (och vid behov färgerna överst i src/styles/global.css).
  *
- * Skriv *ord* med stjärnor runt för att markera det med gul understrykning (gäller rubriker).
- * Tomma fält (e-post, öppettider) döljs automatiskt på sajten.
+ * Skriv *ord* med stjärnor runt för att markera det (kursivt och grönt) i rubriker.
+ * Tomma fält (telefon, e-post, öppettider) döljs automatiskt på sajten.
  */
 import type { IconName } from "./components/icons";
 
-const grundat = 1995;
-const arsErfarenhet = new Date().getFullYear() - grundat;
-
 export const site = {
   /** Kort id som skickas med varje formulär, så en central mottagare vet vilken sajt det kom från. */
-  id: "jovos",
+  id: "vastgota-tradgard",
 
   company: {
-    name: "Jovos Transport AB",
-    shortName: "Jovos",
+    name: "Västgöta Trädgårdsservice AB",
+    shortName: "Västgöta",
+    tagline: "Trädgårdsservice",
     city: "Göteborg",
-    area: "Göteborg",
-    founded: grundat,
-    employees: "ca 12",
-    orgnr: "556521-4862",
-    street: "Björnväktarens Gata 25",
-    zip: "415 51",
-    phone: "031-48 26 33",
-    phoneLink: "+4631482633",
+    area: "Göteborg med omnejd",
+    founded: 2021,
+    orgnr: "559347-2243",
+    street: "Hammarkroken 172",
+    zip: "424 36",
+    postalCity: "Angered",
+    phone: "",
+    phoneLink: "",
     email: "",
     hours: [] as { days: string; time: string }[],
-    taxNote: "Registrerad för F-skatt och moms",
-    people: [
-      { name: "Jovo Marinkovic", role: "Styrelseledamot" },
-      { name: "Ilija Marinkovic", role: "Styrelsesuppleant" },
-    ],
+    taxNote: "Godkänd för F-skatt, registrerad för moms och som arbetsgivare",
+    people: [{ name: "Hernan Tomas Castellon Portal", role: "VD" }],
   },
 
   nav: [
@@ -41,183 +36,214 @@ export const site = {
     { href: "/om-oss", label: "Om oss" },
     { href: "/kontakt", label: "Kontakt" },
   ],
-  navCta: { href: "/offert", label: "Få fri offert" },
+  navCta: { href: "/kontakt", label: "Få fri offert" },
+
+  /**
+   * Hero-bild. Lämna som null för den genererade gräsön. Vill du använda ett riktigt foto eller en
+   * 3D-render (PNG/WebP med transparent bakgrund fungerar bäst): lägg filen i /public och fyll i
+   * t.ex. { src: "/hero.webp", width: 1600, height: 1200 }.
+   */
+  heroImage: {
+    src: "/hero-island.webp",
+    width: 1248,
+    height: 1150,
+    srcset: "/hero-island-800.webp 800w, /hero-island.webp 1248w",
+  } as null | { src: string; width: number; height: number; srcset?: string },
 
   /** Titel och beskrivning per sida (visas i Google och när sidan delas). */
   seo: {
     home: {
-      title: "Städfirma i Göteborg för företag & fastigheter – Jovos Transport AB",
+      title: "Trädgårdsservice i Göteborg – Västgöta Trädgårdsservice AB",
       description:
-        "Professionell lokalvård för företag, kontor, fastighetsägare och BRF:er i Göteborg. Kollektivavtal och över 30 års erfarenhet sedan 1995. Få fri offert.",
+        "Trädgårdsskötsel i Göteborg med omnejd: trädbeskärning, häckklippning, gräsklippning och rensning av rabatter. RUT-avdrag direkt på fakturan. Få fri offert.",
     },
     services: {
-      title: "Lokalvård i Göteborg – Jovos Transport AB",
+      title: "Trädgårdstjänster i Göteborg – Västgöta Trädgårdsservice AB",
       description:
-        "Kontorsstädning, fastighetsstädning och lokalvård för företag, fastighetsägare och BRF:er i Göteborg. Fri offert.",
+        "Trädbeskärning, häckklippning, gräsklippning och rensning av rabatter i Göteborg, bland annat i Angered. Privatpersoner, bostadsrättsföreningar och företag. Fri offert.",
     },
     about: {
-      title: "Om oss – Jovos Transport AB, städfirma i Göteborg",
+      title: "Om oss – Västgöta Trädgårdsservice AB, Angered",
       description:
-        "Jovos Transport AB är ett lokalvårdsbolag i Göteborg, verksamt sedan 1995, med kollektivavtal. Möt ledningen och läs om hur vi arbetar.",
+        "Västgöta Trädgårdsservice AB är ett litet, personligt trädgårdsbolag med bas i Angered. Läs om hur vi arbetar med trädgårdar och grönytor i Göteborg och Västra Götaland.",
     },
     contact: {
-      title: "Kontakt – Jovos Transport AB i Göteborg",
+      title: "Boka trädgårdshjälp eller begär fri offert – Västgöta Trädgårdsservice AB",
       description:
-        "Kontakta Jovos Transport AB i Göteborg. Skicka ett meddelande, se adress och kontaktuppgifter.",
-    },
-    quote: {
-      title: "Få fri offert – Jovos Transport AB",
-      description:
-        "Berätta vad du behöver hjälp med och få en fri offert på kontors-, fastighets- och lokalvård i Göteborg från Jovos Transport AB.",
+        "Berätta om din trädgård så återkommer vi med en fri offert. Västgöta Trädgårdsservice AB, Hammarkroken 172, Angered.",
     },
     privacy: {
-      title: "Integritetspolicy – Jovos Transport AB",
-      description:
-        "Så behandlar Jovos Transport AB dina personuppgifter när du kontaktar oss eller begär offert.",
+      title: "Integritetspolicy – Västgöta Trädgårdsservice AB",
+      description: "Så behandlar Västgöta Trädgårdsservice AB dina personuppgifter när du kontaktar oss.",
     },
-    notFound: { title: "Sidan finns inte – Jovos Transport AB", description: "Sidan finns inte." },
+    notFound: { title: "Sidan finns inte – Västgöta Trädgårdsservice AB", description: "Sidan finns inte." },
     businessDescription:
-      "Lokalvårdsbolag i Göteborg. Kontorsstädning, fastighetsstädning och lokalvård för företag, fastighetsägare och organisationer.",
+      "Trädgårdsbolag i Angered, Göteborg. Trädbeskärning, häckklippning, gräsklippning och rensning av rabatter för privatpersoner, bostadsrättsföreningar och företag.",
   },
 
   services: [
     {
-      id: "kontorsstadning",
-      title: "Kontorsstädning",
+      id: "tradbeskarning",
+      title: "Trädbeskärning",
       short:
-        "Professionell städning anpassad för företag, så att kontoret alltid är redo när dina medarbetare kommer.",
+        "Säker och fackmannamässig beskärning av fruktträd och prydnadsträd som främjar tillväxt och trygghet i trädgården.",
       points: [
-        "Regelbunden städning på tider som passar verksamheten",
-        "Upplägg och frekvens anpassas efter kontorets storlek och behov",
-        "Offert utifrån lokalens yta och önskemål",
+        "Beskärning av fruktträd och prydnadsträd",
+        "Främjar tillväxt, blomning och skörd",
+        "Skapar ett säkrare och mer välskött träd",
       ],
-      icon: "building2" as IconName,
+      icon: "tree" as IconName,
     },
     {
-      id: "fastighetsstadning",
-      title: "Fastighetsstädning",
-      short: "Trapphusstädning och skötsel för fastighetsägare och bostadsrättsföreningar.",
+      id: "hackklippning",
+      title: "Häckklippning",
+      short: "Vi formklipper och trimmar alla typer av häckar så att de håller sig täta, raka och friska.",
       points: [
-        "Trapphusstädning för fastighetsägare och BRF:er",
-        "Regelbunden skötsel av gemensamma utrymmen",
-        "Tydlig offert och fasta rutiner",
+        "Formklippning och trimning av alla typer av häckar",
+        "Engångsuppdrag eller återkommande",
+        "Prydliga, raka linjer och friska häckar",
       ],
-      icon: "building" as IconName,
+      icon: "scissors" as IconName,
     },
     {
-      id: "lokalvard",
-      title: "Lokalvårdstjänster",
-      short: "Övrig regelbunden städning för företag och organisationer.",
+      id: "gresklippning",
+      title: "Gräsklippning",
+      short:
+        "Regelbunden eller enstaka klippning av gräsmattan, med kantstrimning för en välansad och grön gräsmatta.",
       points: [
-        "Lokalvård för butiker, verksamhetslokaler och organisationer",
-        "Regelbunden städning enligt överenskommet schema",
-        "Anpassas efter verksamhetens behov",
+        "Regelbunden klippning eller enstaka tillfällen",
+        "Kantstrimning längs rabatter och stenläggning",
+        "Anpassat efter din tomts storlek",
       ],
-      icon: "clipboard" as IconName,
+      icon: "sprout" as IconName,
+    },
+    {
+      id: "rabatter",
+      title: "Rensning av rabatter",
+      short:
+        "Vi rensar bort ogräs, kantar till rabatterna och ser till att dina planteringar får bästa möjliga förutsättningar.",
+      points: [
+        "Rensning av ogräs i rabatter och planteringar",
+        "Kantning så att rabatterna syns och hålls i form",
+        "Ger växterna bättre förutsättningar att trivas",
+      ],
+      icon: "flower" as IconName,
     },
   ],
 
   home: {
-    topLeft: "Kontor · Fastighet · Lokalvård",
-    headline: "Professionell *lokalvård* för företag och fastigheter i Göteborg",
-    text: "Kontorsstädning, trapphusstädning och lokalvård för företag, fastighetsägare och BRF:er. Skicka en förfrågan så återkommer vi med fri offert.",
+    headline: "Professionell *trädgårdsskötsel* i Göteborg med omnejd",
+    text: "Vi hjälper dig att hålla din trädgård och dina grönytor levande, välskötta och vackra året om.",
     cta: "Få fri offert",
-    ctaSecondaryFallback: "Kontakta oss",
-
-    servicesEyebrow: "Tjänster",
-    servicesHeading: "Lokalvård för *företag* och fastigheter",
-
-    whyEyebrow: "Varför Jovos",
-    whyHeading: `Trygghet efter *${arsErfarenhet} år* i branschen`,
-    why: [
+    ctaSecondary: "Våra tjänster",
+    steps: [
       {
-        icon: "handshake" as IconName,
-        title: "Kollektivavtal",
-        text: "Vi har kollektivavtal (Almega Serviceentreprenad). Det visar att vi är en seriös arbetsgivare med schyssta villkor, och det märks i kvaliteten.",
+        icon: "clipboard" as IconName,
+        title: "Begär offert",
+        text: "Berätta om din trädgård via formuläret.",
       },
       {
-        icon: "badge" as IconName,
-        title: `Över ${Math.floor(arsErfarenhet / 10) * 10} års erfarenhet`,
-        text: `Vi startade ${grundat}. Så lång tid i branschen ger stabilitet och trygghet för dig som kund.`,
+        icon: "calendar" as IconName,
+        title: "Boka tid",
+        text: "Vi återkommer och bokar en tid som passar dig.",
       },
       {
-        icon: "users" as IconName,
-        title: "Ett stabilt team",
-        text: "Vi är ca 12 anställda och har kapacitet för både mindre och större städuppdrag.",
+        icon: "leaf" as IconName,
+        title: "Vi sköter jobbet",
+        text: "Vi utför arbetet noggrant och fackmannamässigt.",
+      },
+      {
+        icon: "sun" as IconName,
+        title: "Njut av trädgården",
+        text: "Du får en välskött och vacker trädgård.",
       },
     ],
 
-    aboutEyebrow: "Om Jovos",
-    aboutHeading: `Göteborgs städfirma sedan *${grundat}*`,
+    servicesEyebrow: "Våra tjänster",
+    servicesHeading: "Allt som behövs för en *välskött* trädgård",
+    servicesIntro:
+      "Vi tar hand om träd, häckar, gräsmatta och rabatter, för privatpersoner, bostadsrättsföreningar och företag.",
+
+    rutEyebrow: "RUT-avdrag",
+    rutHeading: "Halva arbetskostnaden – direkt på *fakturan*",
+    rutText:
+      "Vi har F-skatt, vilket gör att du som privatperson kan använda RUT-avdraget för våra tjänster. Du får 50 % avdrag på arbetskostnaden direkt på fakturan.",
+    rutPoints: [
+      "50 % avdrag på arbetskostnaden",
+      "Avdraget dras direkt på fakturan",
+      "Gäller dig som privatperson",
+    ],
+    rutNote:
+      "Avdraget är högst 75 000 kr per person och år. Reglerna kan ändras, så kontrollera alltid aktuella villkor hos Skatteverket.",
+
+    aboutEyebrow: "Om oss",
+    aboutHeading: "Det lilla, personliga trädgårdsbolaget i *Angered*",
     aboutText:
-      "Jovos Transport AB är ett lokalvårdsbolag med säte i Göteborg. Vi tar hand om kontorsstädning, fastighetsstädning och övrig lokalvård för företag, fastighetsägare och organisationer.",
+      "Västgöta Trädgårdsservice AB är ett litet, personligt trädgårdsbolag med bas i Angered. Med fokus på noggrannhet, kvalitet och personlig service hjälper vi privatpersoner, bostadsrättsföreningar och företag i hela Göteborgsområdet.",
     aboutLink: "Läs mer om oss",
+    audiences: ["Privatpersoner", "Bostadsrättsföreningar", "Företag"],
 
     ctaEyebrow: "Kontakt",
-    ctaHeading: "Redo för *rena* lokaler?",
+    ctaHeading: "Redo för en *grönare* trädgård?",
   },
 
   servicesPage: {
-    eyebrow: "Tjänster",
-    title: "Lokalvård som passar *din verksamhet*",
+    eyebrow: "Våra tjänster",
+    title: "Trädgårdsskötsel för *träd, häckar* och gräsmattor",
     intro:
-      "Kontorsstädning, trapphusstädning och lokalvård för företag, fastighetsägare och BRF:er i Göteborg.",
+      "Från trädbeskärning och häckklippning till gräsklippning och rensning av rabatter, i Göteborg med omnejd.",
     quoteLabel: (service: string) => `Begär offert på ${service.toLowerCase()}`,
   },
 
   aboutPage: {
     eyebrow: "Om oss",
-    title: `Göteborgs städfirma sedan *${grundat}*`,
+    title: "Ett litet team med *stolthet* i hantverket",
     intro:
-      "Jovos Transport AB är ett lokalvårdsbolag med säte i Göteborg. Vi hjälper företag, fastighetsägare, BRF:er och organisationer med kontorsstädning, fastighetsstädning och lokalvård.",
+      "Västgöta Trädgårdsservice AB startades 2021 med visionen att erbjuda pålitlig och effektiv grönyteskötsel i Västra Götaland.",
+    body: "Vi sätter stolthet i det hantverk trädgårdsskötsel faktiskt är. Ingen trädgård är för liten eller för stor för oss. Vi anpassar alltid uppdragen efter dina unika behov och önskemål.",
     values: [
       {
-        icon: "handshake" as IconName,
-        title: "Kollektivavtal",
-        text: "Vi har kollektivavtal (Almega Serviceentreprenad). Det visar att vi är en seriös arbetsgivare med schyssta villkor.",
+        icon: "sprout" as IconName,
+        title: "Noggrannhet",
+        text: "Rena kanter, jämna häckar och väl omhändertagna rabatter. Det är detaljerna som gör skillnaden.",
         style: "bg-brand text-white",
       },
       {
-        icon: "badge" as IconName,
-        title: "Lång erfarenhet",
-        text: `Verksamma sedan ${grundat}. Över ${Math.floor(arsErfarenhet / 10) * 10} år i branschen ger stabilitet och trygghet för dig som kund.`,
-        style: "bg-ink text-white",
+        icon: "shield" as IconName,
+        title: "Kvalitet",
+        text: "Vi gör jobbet ordentligt och fackmannamässigt, oavsett om det gäller ett träd eller en hel gräsmatta.",
+        style: "bg-brand-deep text-white",
       },
       {
         icon: "users" as IconName,
-        title: "Ett stabilt team",
-        text: "Vi är ca 12 anställda och har kapacitet för både mindre och större städuppdrag.",
+        title: "Personlig service",
+        text: "Du pratar med de som gör jobbet. Vi lyssnar på dina önskemål och anpassar efter dem.",
         style: "bg-tint text-ink",
       },
     ],
-    teamEyebrow: "Teamet",
-    teamHeading: "Ledningen",
+    teamEyebrow: "Företaget",
+    teamHeading: "Ansvarig",
     factsEyebrow: "Fakta om företaget",
     facts: [
-      { label: "Bransch", value: "Lokalvård & städservice" },
-      { label: "Skatt", value: "Registrerad för F-skatt och moms" },
-      { label: "Kollektivavtal", value: "Almega Serviceentreprenad" },
+      { label: "Bransch", value: "Skötsel och underhåll av grönytor" },
+      { label: "Skatt", value: "Godkänd för F-skatt, registrerad för moms och som arbetsgivare" },
+      { label: "Kunder", value: "Privatpersoner, bostadsrättsföreningar och företag" },
+      { label: "Verksamhetsområde", value: "Göteborg med omnejd" },
     ],
   },
 
   contactPage: {
-    eyebrow: "Kontakt",
-    title: "Hör av dig – vi *återkommer*",
-    intro: "Skicka ett meddelande så svarar vi så snart vi kan.",
-    formTitle: "Skicka ett meddelande",
-    thanksTitle: "Tack för ditt meddelande",
-    thanksText: "Vi återkommer så snart vi kan.",
-  },
-
-  quotePage: {
-    eyebrow: "Offertförfrågan",
-    title: "Berätta vad du behöver *hjälp med*",
-    intro: "Ju mer du berättar, desto bättre underlag får vi till din offert. Offerten är fri.",
-    types: ["Kontorsstädning", "Fastighetsstädning", "Lokalvård", "Annat"],
-    placeholder:
-      "Typ av lokal eller fastighet, antal våningar/trapphus, önskad frekvens, särskilda önskemål …",
-    thanksTitle: "Din förfrågan är mottagen",
-    thanksText: "Vi återkommer så snart vi kan.",
+    eyebrow: "Kontakt & offert",
+    title: "Boka trädgårdshjälp eller begär *fri offert*",
+    intro: "Berätta om din trädgård och vad du behöver hjälp med så återkommer vi med ett förslag.",
+    formTitle: "Berätta om din trädgård",
+    serviceLabel: "Vilken tjänst önskas?",
+    servicePlaceholder: "Välj tjänst",
+    otherService: "Annat / flera tjänster",
+    messageLabel: "Beskriv din trädgård",
+    messagePlaceholder: "Storlek på tomten, vilka träd eller häckar det gäller, önskat tillfälle …",
+    thanksTitle: "Tack – vi återkommer",
+    thanksText: "Din förfrågan är mottagen. Vi återkommer så snart vi kan med ett förslag.",
   },
 };
 

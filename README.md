@@ -1,7 +1,8 @@
-# Sajtmall (Astro)
+# Västgöta Trädgårdsservice (Astro)
 
-Mall för företagssajter: snabb, statisk och utan backend. Byggd med Astro och Tailwind, **utan React**.
-Designen: varm grå pappersyta med korn, serif-ordbild och en kornig färgblob.
+Webbplats för Västgöta Trädgårdsservice AB: snabb, statisk och utan backend. Byggd med Astro och Tailwind, **utan React**.
+Designen: grön yta med vitt fönsterkort, serif-rubriker med kursivt grönt ord och en egenritad gräsö
+(`src/components/GardenIsland.astro`, byt mot foto vid behov).
 
 ```sh
 bun install
@@ -22,22 +23,22 @@ bun run check     # typkontroll
 
 ## Miljövariabler (Vercel → Settings → Environment Variables)
 
-| Variabel               | Vad                                                                                         |
-| ---------------------- | ------------------------------------------------------------------------------------------- |
-| `SITE_URL`             | Sajtens riktiga adress, t.ex. `https://jovos.se`. Används för kanoniska länkar och sitemap. |
-| `PUBLIC_FORM_ENDPOINT` | Adress som tar emot formulär (se nedan).                                                    |
+| Variabel               | Vad                                                                                           |
+| ---------------------- | --------------------------------------------------------------------------------------------- |
+| `SITE_URL`             | Sajtens riktiga adress, t.ex. `https://example.se`. Används för kanoniska länkar och sitemap. |
+| `PUBLIC_FORM_ENDPOINT` | Adress som tar emot formulär (se nedan).                                                      |
 
 ## Formulär
 
-Formulären (`/kontakt`, `/offert`) skickar `POST` med JSON till `PUBLIC_FORM_ENDPOINT`:
+Formuläret (`/kontakt`) skickar `POST` med JSON till `PUBLIC_FORM_ENDPOINT`:
 
 ```json
 {
-  "site": "jovos",
-  "form": "offert",
+  "site": "vastgota-tradgard",
+  "form": "kontakt",
   "namn": "…",
   "epost": "…",
-  "uppdragstyper": ["Kontorsstädning"],
+  "tjanst": "Häckklippning",
   "…": "…"
 }
 ```
@@ -59,8 +60,8 @@ Formulären (`/kontakt`, `/offert`) skickar `POST` med JSON till `PUBLIC_FORM_EN
 
 ```
 src/site.config.ts     all kunddata och alla texter
-src/pages/             sidorna (index, tjanster, om-oss, kontakt, offert, integritetspolicy, 404)
-src/components/        header, footer, blob, sidhuvud, ikoner
+src/pages/             sidorna (index, tjanster, om-oss, kontakt, integritetspolicy, 404)
+src/components/        header, footer, gräsö, sidhuvud, ikoner
 src/scripts/site.ts    mobilmeny, scroll-animation, formulär (vanlig JavaScript)
 src/styles/global.css  färger, typsnitt och komponentklasser
 ```

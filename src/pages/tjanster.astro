@@ -8,8 +8,8 @@ const p = site.servicesPage;
 ---
 
 <Base title={site.seo.services.title} description={site.seo.services.description}>
-  <PageHero eyebrow={p.eyebrow} title={p.title} intro={p.intro}>
-    <a href={site.navCta.href} class="btn-base btn-dark">
+  <PageHero slot="hero" eyebrow={p.eyebrow} title={p.title} intro={p.intro}>
+    <a href={site.navCta.href} class="btn-base btn-brand">
       {site.navCta.label}
     </a>
     <a href="/kontakt" class="btn-base btn-outline">
@@ -24,15 +24,15 @@ const p = site.servicesPage;
           id={t.id}
           aria-labelledby={`${t.id}-rubrik`}
           class:list={[
-            "grid gap-8 rounded-[2rem] p-7 sm:p-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16",
-            i % 2 === 0 ? "bg-tint" : "border-2 border-line bg-white",
+            "grid gap-8 rounded-[1.75rem] p-7 sm:p-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16",
+            i % 2 === 0 ? "bg-tint" : "bg-white ring-1 ring-line",
           ]}
         >
           <div>
-            <span class="grid size-16 place-items-center rounded-full bg-brand text-white">
+            <span class="grid size-16 place-items-center rounded-2xl bg-brand text-white">
               <Icon name={t.icon} class="size-7" />
             </span>
-            <h2 id={`${t.id}-rubrik`} class="mt-6 text-3xl sm:text-4xl">
+            <h2 id={`${t.id}-rubrik`} class="mt-6 text-4xl sm:text-5xl">
               {t.title}
             </h2>
             <p class="mt-4 max-w-md text-lg leading-relaxed text-muted-foreground">{t.short}</p>
@@ -46,7 +46,7 @@ const p = site.servicesPage;
                 </li>
               ))}
             </ul>
-            <a href={site.navCta.href} class="btn-base btn-dark mt-6">
+            <a href={site.navCta.href} class="btn-base btn-brand mt-6">
               {p.quoteLabel(t.title)}
             </a>
           </div>
