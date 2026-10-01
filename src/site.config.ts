@@ -132,10 +132,6 @@ export const site = {
   ],
 
   home: {
-    chips: [
-      { icon: "badge" as IconName, text: "Godkänd för F-skatt" },
-      { icon: "percent" as IconName, text: "RUT-avdrag på fakturan" },
-    ],
     headline: "Professionell *trädgårdsskötsel* i Göteborg med omnejd",
     text: "Vi hjälper dig att hålla din trädgård och dina grönytor levande, välskötta och vackra året om.",
     cta: "Få fri offert",
